@@ -63,15 +63,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: idx == 0 ?
+      body:
+      idx == 0 ?
       new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new TextField(
               controller: _controller,
-              // decoration: new InputDecoration(
-              //   hintText: 'Type text here',
-              // ),
+              decoration: new InputDecoration(
+                hintText: 'Type text here',
+              ),
             ),
             new ListTile(
               leading: const Icon(Icons.assignment_ind),
@@ -113,10 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       :
       new Text("Right"),
-
       bottomNavigationBar: new BottomNavigationBar(
         currentIndex: idx,
-        onTap: (int idx) { setState((){ this.index = idx; }); },
+        onTap: (int idx) { setState((){ this.idx = idx; }); },
         items: <BottomNavigationBarItem>[
           new BottomNavigationBarItem(
             icon: new Icon(Icons.home),
