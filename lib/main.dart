@@ -1,3 +1,5 @@
+import 'package:doughnut/learning/learning.dart';
+import 'package:doughnut/search/search.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -46,81 +48,32 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var idx = 0;
-  final TextEditingController _controller = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      
       appBar: new AppBar(
         title: new Text('doughnut'),
       ),
-      
-      body:
-      idx == 0 ?
-      new Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new TextField(
-              controller: _controller,
-              decoration: new InputDecoration(
-                hintText: 'Type text here',
-              ),
-            ),
-            new ListTile(
-              leading: const Icon(Icons.assignment_ind),
-              title: const Text('What is this?'),
-              trailing: new IconButton(
-                icon: new Icon(Icons.volume_up),
-                tooltip: 'Listen to learn!',
-                onPressed: () { setState(() { var a = 1.1; }); },
-              ),
-            ),
-            new ListTile(
-              leading: const Icon(Icons.assignment_ind),
-              title: const Text('How are you?'),
-              trailing: new IconButton(
-                icon: new Icon(Icons.volume_up),
-                tooltip: 'Listen to learn!',
-                onPressed: () { setState(() { var a = 1.1; }); },
-              ),
-            ),
-            new ListTile(
-              leading: const Icon(Icons.assignment_ind),
-              title: const Text('What is your name?'),
-              trailing: new IconButton(
-                icon: new Icon(Icons.volume_up),
-                tooltip: 'Listen to learn!',
-                onPressed: () { setState(() { var a = 1.1; }); },
-              ),
-            ),
-            new ListTile(
-              leading: const Icon(Icons.assignment_ind),
-              title: const Text('My name is Bob Smith.'),
-              trailing: new IconButton(
-                icon: new Icon(Icons.volume_up),
-                tooltip: 'Listen to learn!',
-                onPressed: () { setState(() { var a = 1.1; }); },
-              ),
-            ),
-          ],
-        )
-      :
-      new Text("Right"),
+      body: idx == 0 ? new Search() : new Learning(),
       bottomNavigationBar: new BottomNavigationBar(
         currentIndex: idx,
-        onTap: (int idx) { setState((){ this.idx = idx; }); },
+        onTap: (int idx) {
+          setState(() {
+            this.idx = idx;
+          });
+        },
         items: <BottomNavigationBarItem>[
           new BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text("Left"),
+            icon: new Icon(Icons.search),
+            title: new Text('探す'),
           ),
           new BottomNavigationBarItem(
-            icon: new Icon(Icons.search),
-            title: new Text("Right"),
+            icon: new Icon(Icons.home),
+            title: new Text('学ぶ'),
           ),
         ],
       ),
-      
     );
   }
 }
