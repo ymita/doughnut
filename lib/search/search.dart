@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'dart:async' show Future;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class Search extends StatefulWidget {
   @override
@@ -9,22 +12,36 @@ class Search extends StatefulWidget {
 
 class SearchState extends State<Search> {
   final TextEditingController _controller = new TextEditingController();
-
+  var loadedFile;
   List<SearchResult> _searchResults;
+
+    Future<List<SearchResult>> loadAsset() async {
+      
+      loadedFile = await rootBundle.loadString('assets/a.json');
+      final json = new JsonDecoder().convert(loadedFile);
+      var list = new List<SearchResult>();
+
+      (json as Map<String, dynamic>).forEach((key, value){
+        print(value);
+        list.add(new SearchResult(
+          word: value["word"],
+          englishSentence:  value["wordset_id"])
+        );
+      });
+
+      return list;
+    }
 
   @override
   void initState() {
     super.initState();
 
     _searchResults = new List<SearchResult>();
-
-    for (var i = 0; i < 100; i++) {
-      _searchResults.add(new SearchResult(
-        word: 'word$i',
-        englishSentence: 'englishSentence $i',
-        japaneseSentence: '日本語文 $i'
-      ));
-    }
+    this.loadAsset().then((_list) {
+      setState(() {
+        _searchResults = _list;
+      });
+    });
   }
 
   @override
