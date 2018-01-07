@@ -15,17 +15,20 @@ class SearchState extends State<Search> {
 
   List<SearchResult> _searchResults = [];
 
-  Future<List<SearchResult>> loadAsset() async {
-    final loadedFile = await rootBundle.loadString('assets/a.json');
+  Future<List<SearchResult>> fetchWords(String query) async {
+
+    final firstChar = query[0];
+    final loadedFile = await rootBundle.loadString('assets/$firstChar.json');
     final json = new JsonDecoder().convert(loadedFile);
     final list = new List<SearchResult>();
 
     (json as Map<String, dynamic>).forEach((key, value) {
-      print(value);
-      list.add(new SearchResult(
-        word: value["word"],
-        englishSentence: value["wordset_id"])
-      );
+      if(key.toLowerCase().startsWith(query)){
+        list.add(new SearchResult(
+          word: value["word"],
+          englishSentence: value["wordset_id"])
+        );
+      }
     });
 
     return list;
@@ -35,7 +38,7 @@ class SearchState extends State<Search> {
     if (inputValue.isEmpty) { return; }
 
     final String query = inputValue.toLowerCase();
-    this.loadAsset().then((_list) {
+    this.fetchWords(query).then((_list) {
       setState(() {
         _searchResults = _list.where((item) {
           return item.word.toLowerCase().startsWith(query) ? true : false;
