@@ -12,34 +12,34 @@ class Search extends StatefulWidget {
 
 class SearchState extends State<Search> {
   final TextEditingController _controller = new TextEditingController();
-  var loadedFile;
-  List<SearchResult> _searchResults;
 
-    Future<List<SearchResult>> loadAsset() async {
-      
-      loadedFile = await rootBundle.loadString('assets/a.json');
-      final json = new JsonDecoder().convert(loadedFile);
-      var list = new List<SearchResult>();
+  List<SearchResult> _searchResults = [];
 
-      (json as Map<String, dynamic>).forEach((key, value){
-        print(value);
-        list.add(new SearchResult(
-          word: value["word"],
-          englishSentence:  value["wordset_id"])
-        );
-      });
+  Future<List<SearchResult>> loadAsset() async {
+    final loadedFile = await rootBundle.loadString('assets/a.json');
+    final json = new JsonDecoder().convert(loadedFile);
+    final list = new List<SearchResult>();
 
-      return list;
-    }
+    (json as Map<String, dynamic>).forEach((key, value) {
+      print(value);
+      list.add(new SearchResult(
+        word: value["word"],
+        englishSentence: value["wordset_id"])
+      );
+    });
 
-  @override
-  void initState() {
-    super.initState();
+    return list;
+  }
 
-    _searchResults = new List<SearchResult>();
+  void _search(String inputValue) {
+    if (inputValue.isEmpty) { return; }
+
+    final String query = inputValue.toLowerCase();
     this.loadAsset().then((_list) {
       setState(() {
-        _searchResults = _list;
+        _searchResults = _list.where((item) {
+          return item.word.toLowerCase().startsWith(query) ? true : false;
+        }).toList();
       });
     });
   }
@@ -51,6 +51,7 @@ class SearchState extends State<Search> {
         new TextField(
           controller: _controller,
           decoration: new InputDecoration(hintText: 'Type word'),
+          onSubmitted: _search
         ),
         new Expanded(
           child: new ListView(
