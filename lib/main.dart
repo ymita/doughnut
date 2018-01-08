@@ -56,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: new Text('doughnut'),
       ),
       body: idx == 0 ? new Search() : new Learning(),
+      /// Prevents software keyboard from appearing over TextField.
+      resizeToAvoidBottomPadding: false,
       bottomNavigationBar: new BottomNavigationBar(
         currentIndex: idx,
         onTap: (int idx) {
