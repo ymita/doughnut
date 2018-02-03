@@ -37,25 +37,25 @@ class SearchState extends State<Search> {
     //sentences returned to _search
     final list = new List<SearchResult>();
     //Service URL
-    var url = 'https://www.dictionaryapi.com/api/v1/references/learners/xml/$query?key=d89a06d2-eff1-4f07-b08f-869850bc8b57';
+    var url =
+        'https://www.dictionaryapi.com/api/v1/references/learners/xml/$query?key=d89a06d2-eff1-4f07-b08f-869850bc8b57';
     var httpClient = new HttpClient();
 
     try {
       var request = await httpClient.getUrl(Uri.parse(url));
       var response = await request.close();
       if (response.statusCode == HttpStatus.OK) {
-        
         //Transform response data into XmlDocument
         var content = await response.transform(UTF8.decoder).join();
         var document = xml.parse(content);
-        
-        //retrieve example sentences for the word 
+
+        //retrieve example sentences for the word
         var sentences = document.findAllElements('vi');
-        
+
         //add the sentences to the list
-        sentences.forEach((value){
+        sentences.forEach((value) {
           list.add(new SearchResult(
-            word: value.toString(), englishSentence: value.toString()));
+              word: value.toString(), englishSentence: value.toString()));
         });
       } else {
         print("error : ${response.statusCode}");
@@ -80,6 +80,31 @@ class SearchState extends State<Search> {
     });
   }
 
+  RichText formatString(String rawString) {
+    //construct the structure of content embedded into ListTile
+    var rt = new RichText(
+      text: new TextSpan(
+        style: DefaultTextStyle.of(context).style,
+        children: <TextSpan>[],
+      ),
+    );
+
+    //style the word that you are learning
+    var chunks = rawString.split(new RegExp("<it>|</it>"));
+    for (int i = 0; i < chunks.length; i++) {
+      var chunk = chunks[i];
+      if (chunk.contains(new RegExp("<vi>|</vi>"))) {
+        rt.text.children.add(
+            new TextSpan(text: chunk.replaceAll(new RegExp("<vi>|</vi>"), "")));
+      } else {
+        rt.text.children.add(
+            new TextSpan(text: chunk, style: new TextStyle(color: Colors.red)));
+      }
+    }
+
+    return rt;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -93,7 +118,7 @@ class SearchState extends State<Search> {
             children: _searchResults.map((SearchResult searchResult) {
               return new ListTile(
                 leading: const Icon(Icons.assignment_ind),
-                title: new Text(searchResult.word),
+                title: formatString(searchResult.word),
                 trailing: new IconButton(
                     icon: new Icon(Icons.volume_up),
                     tooltip: searchResult.englishSentence,
