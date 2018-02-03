@@ -27,33 +27,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-   - assets/a.json
-   - assets/b.json
-   - assets/c.json
-   - assets/d.json
-   - assets/e.json
-   - assets/f.json
-   - assets/g.json
-   - assets/h.json
-   - assets/i.json
-   - assets/j.json
-   - assets/k.json
-   - assets/l.json
-   - assets/m.json
-   - assets/n.json
-   - assets/o.json
-   - assets/p.json
-   - assets/q.json
-   - assets/r.json
-   - assets/s.json
-   - assets/t.json
-   - assets/u.json
-   - assets/v.json
-   - assets/w.json
-   - assets/x.json
-   - assets/y.json
-   - assets/z.json
+  # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
