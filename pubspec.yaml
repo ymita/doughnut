@@ -2,7 +2,6 @@ name: doughnut
 description: A new Flutter project.
 
 dependencies:
-  xml: "^2.6.0"
   flutter:
     sdk: flutter
 
