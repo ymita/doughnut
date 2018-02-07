@@ -124,12 +124,9 @@ class SearchState extends State<Search> {
                     icon: new Icon(Icons.volume_up),
                     tooltip: searchResult.englishSentence,
                     onPressed: () async {
-                      print(searchResult.japaneseSentence);
-                      List<String> languages = await Tts.getAvailableLanguages();
-                      var lang = languages[0];
-                      // This may not be necessary as not setting this speaks in English fluently...
-                      await Tts.setLanguage(lang);
-                      
+                      //Set English explicitly
+                      await Tts.setLanguage('en-us');
+                      //Speak                      
                       Tts.speak(searchResult.englishSentence.replaceAll(new RegExp("<[^>]*>"), ""));
                     }),
               );
