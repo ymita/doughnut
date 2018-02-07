@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:xml/xml.dart' as xml;
+import 'package:tts/tts.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -122,8 +123,14 @@ class SearchState extends State<Search> {
                 trailing: new IconButton(
                     icon: new Icon(Icons.volume_up),
                     tooltip: searchResult.englishSentence,
-                    onPressed: () {
+                    onPressed: () async {
                       print(searchResult.japaneseSentence);
+                      List<String> languages = await Tts.getAvailableLanguages();
+                      var lang = languages[0];
+                      // This may not be necessary as not setting this speaks in English fluently...
+                      await Tts.setLanguage(lang);
+                      
+                      Tts.speak(searchResult.englishSentence.replaceAll(new RegExp("<[^>]*>"), ""));
                     }),
               );
             }).toList(),
