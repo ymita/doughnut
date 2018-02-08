@@ -96,7 +96,7 @@ class SearchState extends State<Search> {
       var chunk = chunks[i];
       if (chunk.contains(new RegExp("<vi>|</vi>"))) {
         rt.text.children.add(
-            new TextSpan(text: chunk.replaceAll(new RegExp("<vi>|</vi>"), "")));
+            new TextSpan(text: chunk.replaceAll(new RegExp("<vi>|</vi>"), "").replaceAll(new RegExp("<phrase>|</phrase>"), "")));
       } else {
         rt.text.children.add(
             new TextSpan(text: chunk, style: new TextStyle(color: Colors.red)));
