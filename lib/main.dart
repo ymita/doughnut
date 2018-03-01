@@ -54,6 +54,54 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('doughnut'),
+        actions: <Widget>[
+            new IconButton(
+              icon: new Icon(Icons.info),
+              onPressed: () {
+                showDialog<Null>(
+                  context: context,
+                  barrierDismissible: false, // user must tap button!
+                  child: new AlertDialog(
+                    title: new Text('Open Source Licenses'),
+                    content: new SingleChildScrollView(
+                      child: new ListBody(
+                        children: <Widget>[
+                          new Text("xml", maxLines: 1000, style: new TextStyle(fontWeight: FontWeight.bold)),
+                          new Text(' '),
+                          new Text('The MIT License'),
+                          new Text(' '),
+                          new Text('Copyright (c) 2006-2017 Lukas Renggli.'),
+                          new Text('All rights reserved.'),
+                          new Text(' '),
+                          new Text('Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:', maxLines: 1000),
+                          new Text('The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.', maxLines: 1000),
+                          new Text('THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.', maxLines: 1000),
+                          new Text(' '),
+                          new Text('Reference: https://pub.dartlang.org/packages/xml'),
+                          new Text(' '),
+                          new Text(' '),
+                          new Text(' '),
+                          new Text("tts", maxLines: 1000, style: new TextStyle(fontWeight: FontWeight.bold)),
+                          new Text(' '),
+                          new Text('unknown (LICENSE)'),
+                          new Text(' '),
+                          new Text('Reference: https://pub.dartlang.org/packages/tts'),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
       ),
       body: idx == 0 ? new Search() : new Learning(),
       /// Prevents software keyboard from appearing over TextField.
