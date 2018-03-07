@@ -86,6 +86,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           new Text('unknown (LICENSE)'),
                           new Text(' '),
                           new Text('Reference: https://pub.dartlang.org/packages/tts'),
+                          new Text(' '),
+                          new Text(' '),
+                          new Text(' '),
+                          new Text("Emoji One", maxLines: 1000, style: new TextStyle(fontWeight: FontWeight.bold)),
+                          new Text(' '),
+                          new Text('the Creative Commons Attribution-Share Alike 4.0 International license'),
+                          new Text(' '),
+                          new Text('Source: https://github.com/emojione/emojione/tree/2.2.7'),
+                          new Text(' '),
+                          new Text('Author: https://github.com/emojione/emojione/graphs/contributors'),
                         ],
                       ),
                     ),
@@ -106,24 +116,24 @@ class _MyHomePageState extends State<MyHomePage> {
       body: idx == 0 ? new Search() : new Learning(),
       /// Prevents software keyboard from appearing over TextField.
       resizeToAvoidBottomPadding: false,
-      bottomNavigationBar: new BottomNavigationBar(
-        currentIndex: idx,
-        onTap: (int idx) {
-          setState(() {
-            this.idx = idx;
-          });
-        },
-        items: <BottomNavigationBarItem>[
-          new BottomNavigationBarItem(
-            icon: new Icon(Icons.search),
-            title: new Text('探す'),
-          ),
-          new BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('学ぶ'),
-          ),
-        ],
-      ),
+      // bottomNavigationBar: new BottomNavigationBar(
+      //   currentIndex: idx,
+      //   onTap: (int idx) {
+      //     setState(() {
+      //       this.idx = idx;
+      //     });
+      //   },
+      //   items: <BottomNavigationBarItem>[
+      //     new BottomNavigationBarItem(
+      //       icon: new Icon(Icons.search),
+      //       title: new Text('探す'),
+      //     ),
+      //     new BottomNavigationBarItem(
+      //       icon: new Icon(Icons.home),
+      //       title: new Text('学ぶ'),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
