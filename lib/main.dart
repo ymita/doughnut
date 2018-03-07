@@ -95,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           new Text(' '),
                           new Text('Source: https://github.com/emojione/emojione/tree/2.2.7'),
                           new Text(' '),
+                          new Text(' '),
                           new Text('Author: https://github.com/emojione/emojione/graphs/contributors'),
                         ],
                       ),
