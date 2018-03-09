@@ -91,15 +91,28 @@ class SearchState extends State<Search> {
     );
 
     //style the word that you are learning
-    var chunks = rawString.split(new RegExp("<it>|</it>"));
+    var chunks = rawString.replaceAll(new RegExp(r'(\[)(.+)(\])'),"")
+                           .replaceAll(new RegExp("<vi>|</vi>"), "")
+                           .replaceAll("  "," ")
+                           .split(new RegExp("(?=(<it>))|(?=(</it>))|(?=(<phrase>))|(?=(</phrase>))"));
+
     for (int i = 0; i < chunks.length; i++) {
       var chunk = chunks[i];
-      if (chunk.contains(new RegExp("<vi>|</vi>"))) {
+
+      if (chunk.contains(new RegExp("<it>"))) {
         rt.text.children.add(
-            new TextSpan(text: chunk.replaceAll(new RegExp("<vi>|</vi>"), "").replaceAll(new RegExp("<phrase>|</phrase>"), "")));
+            new TextSpan(
+                text: chunk.replaceAll(new RegExp("<it>"), ""),
+                style: new TextStyle(color: Colors.red)));
+      } else if (chunk.contains(new RegExp("<phrase>"))) {
+          rt.text.children.add(
+              new TextSpan(
+                  text: chunk.replaceAll(new RegExp("<phrase>"), ""),
+                  style: new TextStyle(color: Colors.blue)));
       } else {
         rt.text.children.add(
-            new TextSpan(text: chunk, style: new TextStyle(color: Colors.red)));
+            new TextSpan(
+                text: chunk.replaceAll(new RegExp("</it>|</phrase>"), "")));
       }
     }
 
@@ -127,7 +140,10 @@ class SearchState extends State<Search> {
                       //Set English explicitly
                       await Tts.setLanguage('en-us');
                       //Speak                      
-                      Tts.speak(searchResult.englishSentence.replaceAll(new RegExp("<[^>]*>"), ""));
+                      Tts.speak(
+                          searchResult.englishSentence.replaceAll(new RegExp(r'(\[)(.+)(\])'),"")
+                                                       .replaceAll(new RegExp("<[^>]*>"), "")
+                      );
                     }),
               );
             }).toList(),
