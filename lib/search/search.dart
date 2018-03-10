@@ -131,7 +131,7 @@ class SearchState extends State<Search> {
           child: new ListView(
             children: _searchResults.map((SearchResult searchResult) {
               return new ListTile(
-                leading: const Icon(Icons.assignment_ind),
+                // leading: const Icon(Icons.assignment_ind),
                 title: formatString(searchResult.word),
                 trailing: new IconButton(
                     icon: new Icon(Icons.volume_up),
