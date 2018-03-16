@@ -139,7 +139,12 @@ class SearchState extends State<Search> {
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  new Icon(Icons.save_alt, color: Colors.red),
+                                  new IconButton(
+                                    icon: new Icon(Icons.save_alt, color: Colors.red),
+                                    onPressed: () async{
+                                      
+                                    },
+                                  ),
                                   new IconButton(
                                     icon: new Icon(Icons.volume_up),
                                     tooltip: searchResult.englishSentence,
