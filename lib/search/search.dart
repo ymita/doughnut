@@ -134,18 +134,29 @@ class SearchState extends State<Search> {
                         tiles: _searchResults.map((SearchResult searchResult) {
                           return new ListTile(
                             title: formatString(searchResult.word),
-                            trailing: new IconButton(
-                                icon: new Icon(Icons.volume_up),
-                                tooltip: searchResult.englishSentence,
-                                onPressed: () async {
-                                  //Set English explicitly
-                                  await Tts.setLanguage('en-us');
-                                  //Speak
-                                  Tts.speak(searchResult.englishSentence
-                                      .replaceAll(
-                                          new RegExp(r'(\[)(.+)(\])'), "")
-                                      .replaceAll(new RegExp("<[^>]*>"), ""));
-                                }),
+                            trailing: 
+                               new Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  new Icon(Icons.save_alt, color: Colors.red),
+                                  new IconButton(
+                                    icon: new Icon(Icons.volume_up),
+                                    tooltip: searchResult.englishSentence,
+                                    onPressed: () async {
+                                      //Set English explicitly
+                                      await Tts.setLanguage('en-us');
+                                      //Speak
+                                      Tts.speak(searchResult.englishSentence
+                                          .replaceAll(
+                                              new RegExp(r'(\[)(.+)(\])'), "")
+                                          .replaceAll(new RegExp("<[^>]*>"), ""));
+                                    },
+                                    color: Colors.black,
+                                  ),
+                                ],
+                                
+                              ),
                           );
                         }).toList())
                     .toList()))
