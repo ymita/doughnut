@@ -91,28 +91,27 @@ class SearchState extends State<Search> {
     );
 
     //style the word that you are learning
-    var chunks = rawString.replaceAll(new RegExp(r'(\[)(.+)(\])'),"")
-                           .replaceAll(new RegExp("<vi>|</vi>"), "")
-                           .replaceAll("  "," ")
-                           .split(new RegExp("(?=(<it>))|(?=(</it>))|(?=(<phrase>))|(?=(</phrase>))"));
+    var chunks = rawString
+        .replaceAll(new RegExp(r'(\[)(.+)(\])'), "")
+        .replaceAll(new RegExp("<vi>|</vi>"), "")
+        .replaceAll("  ", " ")
+        .split(new RegExp(
+            "(?=(<it>))|(?=(</it>))|(?=(<phrase>))|(?=(</phrase>))"));
 
     for (int i = 0; i < chunks.length; i++) {
       var chunk = chunks[i];
 
       if (chunk.contains(new RegExp("<it>"))) {
-        rt.text.children.add(
-            new TextSpan(
-                text: chunk.replaceAll(new RegExp("<it>"), ""),
-                style: new TextStyle(color: Colors.red)));
+        rt.text.children.add(new TextSpan(
+            text: chunk.replaceAll(new RegExp("<it>"), ""),
+            style: new TextStyle(color: Colors.red)));
       } else if (chunk.contains(new RegExp("<phrase>"))) {
-          rt.text.children.add(
-              new TextSpan(
-                  text: chunk.replaceAll(new RegExp("<phrase>"), ""),
-                  style: new TextStyle(color: Colors.blue)));
+        rt.text.children.add(new TextSpan(
+            text: chunk.replaceAll(new RegExp("<phrase>"), ""),
+            style: new TextStyle(color: Colors.blue)));
       } else {
-        rt.text.children.add(
-            new TextSpan(
-                text: chunk.replaceAll(new RegExp("</it>|</phrase>"), "")));
+        rt.text.children.add(new TextSpan(
+            text: chunk.replaceAll(new RegExp("</it>|</phrase>"), "")));
       }
     }
 
@@ -128,27 +127,28 @@ class SearchState extends State<Search> {
             decoration: new InputDecoration(hintText: 'Type word'),
             onSubmitted: _search),
         new Expanded(
-          child: new ListView(
-            children: _searchResults.map((SearchResult searchResult) {
-              return new ListTile(
-                // leading: const Icon(Icons.assignment_ind),
-                title: formatString(searchResult.word),
-                trailing: new IconButton(
-                    icon: new Icon(Icons.volume_up),
-                    tooltip: searchResult.englishSentence,
-                    onPressed: () async {
-                      //Set English explicitly
-                      await Tts.setLanguage('en-us');
-                      //Speak                      
-                      Tts.speak(
-                          searchResult.englishSentence.replaceAll(new RegExp(r'(\[)(.+)(\])'),"")
-                                                       .replaceAll(new RegExp("<[^>]*>"), "")
-                      );
-                    }),
-              );
-            }).toList(),
-          ),
-        )
+            child: new ListView(
+                children: ListTile
+                    .divideTiles(
+                        context: context,
+                        tiles: _searchResults.map((SearchResult searchResult) {
+                          return new ListTile(
+                            title: formatString(searchResult.word),
+                            trailing: new IconButton(
+                                icon: new Icon(Icons.volume_up),
+                                tooltip: searchResult.englishSentence,
+                                onPressed: () async {
+                                  //Set English explicitly
+                                  await Tts.setLanguage('en-us');
+                                  //Speak
+                                  Tts.speak(searchResult.englishSentence
+                                      .replaceAll(
+                                          new RegExp(r'(\[)(.+)(\])'), "")
+                                      .replaceAll(new RegExp("<[^>]*>"), ""));
+                                }),
+                          );
+                        }).toList())
+                    .toList()))
       ],
     );
   }
