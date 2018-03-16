@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+       
       title: 'Flutter Demo',
       theme: new ThemeData(
         // This is the theme of your application.
@@ -233,24 +234,24 @@ class _MyHomePageState extends State<MyHomePage> {
       body: idx == 0 ? new Search() : new Learning(),
       /// Prevents software keyboard from appearing over TextField.
       resizeToAvoidBottomPadding: false,
-      // bottomNavigationBar: new BottomNavigationBar(
-      //   currentIndex: idx,
-      //   onTap: (int idx) {
-      //     setState(() {
-      //       this.idx = idx;
-      //     });
-      //   },
-      //   items: <BottomNavigationBarItem>[
-      //     new BottomNavigationBarItem(
-      //       icon: new Icon(Icons.search),
-      //       title: new Text('探す'),
-      //     ),
-      //     new BottomNavigationBarItem(
-      //       icon: new Icon(Icons.home),
-      //       title: new Text('学ぶ'),
-      //     ),
-      //   ],
-      // ),
+      bottomNavigationBar: new BottomNavigationBar(
+        currentIndex: idx,
+        onTap: (int idx) {
+          setState(() {
+            this.idx = idx;
+          });
+        },
+        items: <BottomNavigationBarItem>[
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.search),
+            title: new Text('探す'),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            title: new Text('学ぶ'),
+          ),
+        ],
+      ),
     );
   }
 }
