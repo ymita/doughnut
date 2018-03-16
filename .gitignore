@@ -10,3 +10,4 @@ pubspec.lock
 .flutter-plugins
 android/key.properties
 key.jks
+*.log
