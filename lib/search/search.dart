@@ -45,18 +45,34 @@ class SearchState extends State<Search> {
     try {
       var request = await httpClient.getUrl(Uri.parse(url));
       var response = await request.close();
+
       if (response.statusCode == HttpStatus.OK) {
-        //Transform response data into XmlDocument
+
+        //Transform response data into XmlDocument.
         var content = await response.transform(UTF8.decoder).join();
         var document = xml.parse(content);
 
-        //retrieve example sentences for the word
-        var sentences = document.findAllElements('vi');
+        //Filter only sentences corresponding to keyword which user entered.
+        var sentences1 = document.findAllElements('entry')
+                                     .where((x) => x.getAttribute('id').toLowerCase().contains('$query'));
 
-        //add the sentences to the list
-        sentences.forEach((value) {
+        //Create XmlNode from sentences1(XmlElement).
+        var builder = new xml.XmlBuilder();
+        builder.processing('xml', 'version="1.0"');
+        builder.element('doughnut', nest: sentences1);
+        var doughnutXml = builder.build();
+
+        //Retrieve example sentences for the word
+        var sentences2 = doughnutXml.document.findAllElements('vi');
+
+        //Add the sentences to the list
+        sentences2.forEach((value) {
+          debugPrint("sentences2: " + value.toString());
           list.add(new SearchResult(
-              word: value.toString(), englishSentence: value.toString()));
+                                      word: value.toString(),
+                                      englishSentence: value.toString()
+                                    )
+          );
         });
       } else {
         print("error : ${response.statusCode}");
